@@ -32,12 +32,12 @@ const orderSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['Pending', 'Shipped', 'Delivered', 'Cancelled', 'Pending Payment'],
-    default: 'Pending',
+     enum: ['Pending Payment', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],  
+     default: 'Pending Payment', 
   },
   paymentMethod: {
     type: String,
-    enum: ['COD', 'eSewa'],
+    enum: ['COD', 'eSewa' ,'Khalti'],
     required: true,
     default: 'COD'
   },

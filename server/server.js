@@ -56,6 +56,8 @@
 import dotenv from "dotenv";
 dotenv.config(); // Must be at the very top
 
+
+
 // --- DEBUGGING LOGS: Check your terminal for this output on server start ---
 console.log("--- Loading Environment Variables ---");
 console.log("EMAIL_USER:", process.env.EMAIL_USER);
@@ -74,7 +76,9 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
+import khaltiRoutes from "./Routes/khaltiRoutes.js"
 import paymentRoutes from './routes/paymentRoutes.js';
+
 import errorHandler from './middleware/errorHandler.js';
 
 const app = express();
@@ -101,6 +105,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/khalti', khaltiRoutes);
 
 app.get("/", (req, res) => {
     res.status(200).send("Welcome to the hamrogrocery-backend API!");
