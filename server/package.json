@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js" ,
+    "data:import": "node seeder -i",
+    "data:destroy": "node seeder -d"
   },
   "keywords": [],
   "author": "",

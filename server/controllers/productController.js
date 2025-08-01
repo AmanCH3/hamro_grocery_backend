@@ -1,4 +1,5 @@
 import Product from '../models/Product.js';
+import Category from '../models/Category.js';
 
 export const getProducts = async (req, res) => {
   try {
@@ -35,4 +36,26 @@ export const deleteProduct = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+
+export const getProductsByCategory = async (req, res) => {
+    try {
+        const { categoryName } = req.params;
+        const category = await Category.findOne({ 
+            name: { $regex: new RegExp(`^${categoryName}$`, 'i') } 
+        });
+        
+        if (!category) {
+            return res.status(404).json({ message: `Category '${categoryName}' not found.` });
+        }
+        const products = await Product.find({ category: category._id })
+                                      .populate('category');
+        
+        res.status(200).json(products);
+
+    } catch (error) {
+        console.error('Error fetching products by category:', error);
+        res.status(500).json({ message: 'Server Error' });
+    }
 };
