@@ -439,9 +439,23 @@ export const getUserProfile = async (req, res) => {
 
 // Update Profile Info
 export const updateUserProfile = async (req, res) => {
-    const { fullName, email, location } = req.body;
+    console.log(req.body);
+    
+    // Defensive coding: provide a default empty object to prevent a crash
+    // if req.body is undefined for any reason.
+    const { fullName, email, location } = req.body || {};
+
+    // Validate that at least one field was provided for update
+    if (fullName === undefined && email === undefined && location === undefined) {
+        return res.status(400).json({
+            success: false,
+            message: "No update information provided in request body.",
+        });
+    }
+
     try {
         const user = await User.findById(req.user._id);
+
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
@@ -455,7 +469,7 @@ export const updateUserProfile = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Profile updated successfully",
-            data: createUserData(updatedUser),
+            data: createUserData(updatedUser), 
         });
     } catch (error) {
         console.error("Update Profile Error:", error);

@@ -173,18 +173,35 @@
   };
 
 
+  // export const getMyOrders = async (req, res) => {
+  //   try {
+  //     const orders = await Order.find({
+  //       customer: req.user._id,
+  //       // status: { $ne: 'Pending Payment' },
+  //     }).sort({ createdAt: -1 });
+  //     res.status(200).json({ success: true, orders });
+  //   } catch (error) {
+  //     console.error("Error fetching user orders:", error);
+  //     res.status(500).json({ success: false, message: "Server Error" });
+  //   }
+  // };
+
   export const getMyOrders = async (req, res) => {
-    try {
-      const orders = await Order.find({
-        customer: req.user._id,
-        status: { $ne: 'Pending Payment' },
-      }).sort({ createdAt: -1 });
-      res.status(200).json({ success: true, orders });
-    } catch (error) {
-      console.error("Error fetching user orders:", error);
-      res.status(500).json({ success: false, message: "Server Error" });
-    }
-  };
+  try {
+    console.log("Fetching orders for user ID:", req.user._id); // Log the ID being used
+
+    const orders = await Order.find({
+      customer: req.user._id,
+      // status: { $ne: 'Pending Payment' }, // <-- Temporarily comment this out for testing
+    }).sort({ createdAt: -1 });
+
+    console.log("Found orders:", orders); // Log what the DB returns
+    res.status(200).json({ success: true, orders });
+  } catch (error) {
+    console.error("Error fetching user orders:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
 
 
   export const getOrderById = async (req, res) => {

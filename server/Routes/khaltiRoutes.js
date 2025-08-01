@@ -4,7 +4,7 @@ import { authenticateUser } from '../middleware/authorizedUser.js';
 
 const router = express.Router();
 
-router.post('/initiate', initiateKhaltiPayment);
-router.post('/verify', verifyKhaltiPayment);
+router.post('/initiate', authenticateUser, initiateKhaltiPayment);
+router.post('/verify', authenticateUser, verifyKhaltiPayment);
 
 export default router;

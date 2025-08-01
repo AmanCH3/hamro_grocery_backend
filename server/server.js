@@ -59,10 +59,13 @@ dotenv.config(); // Must be at the very top
 
 
 // --- DEBUGGING LOGS: Check your terminal for this output on server start ---
-console.log("--- Loading Environment Variables ---");
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Loaded" : "NOT LOADED");
-console.log("-----------------------------------");
+console.log("--- Loading Environment Variables on Startup ---");
+console.log("PORT:", process.env.PORT);
+console.log("CLIENT_URL:", process.env.CLIENT_URL);
+console.log("KHALTI_SECRET_KEY:", process.env.KHALTI_SECRET_KEY ? "Loaded" : "!!! NOT LOADED !!!");
+console.log("KHALTI_PUBLIC_KEY:", process.env.KHALTI_PUBLIC_KEY ? "Loaded" : "!!! NOT LOADED !!!");
+console.log("KHALTI_URL:", process.env.KHALTI_URL);
+console.log("----------------------------------------------");
 
 
 import express from "express";
@@ -71,13 +74,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { connectDB } from "./config/db.js";
 import userRoutes from './Routes/userRoutes.js'
-import adminUserRoutes from './routes/admin/adminUserRoutes.js';
-import categoryRoutes from './routes/categoryRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
-import dashboardRoutes from './routes/dashboardRoutes.js';
+import adminUserRoutes from './Routes/admin/adminUserRoutes.js';
+import categoryRoutes from './Routes/categoryRoutes.js';
+import productRoutes from './Routes/productRoutes.js';
+import orderRoutes from './Routes/orderRoutes.js';
+import dashboardRoutes from './Routes/dashboardRoutes.js';
 import khaltiRoutes from "./Routes/khaltiRoutes.js"
-import paymentRoutes from './routes/paymentRoutes.js';
+import paymentRoutes from './Routes/paymentRoutes.js';
 
 import errorHandler from './middleware/errorHandler.js';
 
@@ -97,6 +100,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 app.use("/api/auth", userRoutes);
 app.use('/api/admin/users', adminUserRoutes);
